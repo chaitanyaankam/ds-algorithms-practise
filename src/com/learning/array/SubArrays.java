@@ -1,6 +1,8 @@
 package com.learning.array;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 public class SubArrays {
 
@@ -19,7 +21,7 @@ public class SubArrays {
         }
 
         s = (s > e) ? s+e-(e = s) : s;
-        System.out.println("s "+s+" e "+e);
+        //System.out.println("s "+s+" e "+e);
 
         int i = 0, start = 0, end = 0;
         while(i < s) {
@@ -39,7 +41,7 @@ public class SubArrays {
             i--;
         }
 
-        System.out.println("start "+start+" end "+end);
+        //System.out.println("start "+start+" end "+end);
         return new int[] {start, end};
     }
 }

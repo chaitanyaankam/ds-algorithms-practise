@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class SortingUtility {
 
     public static void main(String arg[]){
-        int[] a = new int[] {70, 40, 30, 20, 60, 10};
-        SortingUtility sortingUtility = new SortingUtility();
+        //int[] a = new int[] {70, 40, 30, 20, 60, 10};
+        //SortingUtility sortingUtility = new SortingUtility();
         //sortingUtility.bubbleSort(a);
         //sortingUtility.insertionSort(a);
         //sortingUtility.selectionSort(a);
@@ -18,8 +18,10 @@ public class SortingUtility {
         //int[] af = new int[a1.length+a2.length];
         //sortingUtility.merge(af, a1, a2, a1.length, a2.length);
         //sortingUtility.mergeSort(a, a.length);
-
-        //Arrays.stream(a).forEach(System.out::println);
+        int[] a = new int[]{0, 5, 2, 3, 1};
+        //mergeSortUpgraded(a, 0, a.length-1);
+        //Arrays.stream(a).forEach(x -> System.out.print(x+ " "));
+        System.out.println(findInversions(a, 0, a.length-1));
 
         //List<String> activities = Arrays.asList(new String[]{"001", "035", "004"});
         /*Collections.sort(activities, (obj1, obj2)->{
@@ -36,9 +38,9 @@ public class SortingUtility {
         sortingUtility.countingSort(a);
         Arrays.stream(a).forEach(i->System.out.print(i+" "));*/
 
-        a = new int[]{93, 82, 105, 11, 4, 78, 99, 100, 1054};
+        /*a = new int[]{93, 82, 105, 11, 4, 78, 99, 100, 1054};
         sortingUtility.bucketSorting(a);
-        Arrays.stream(a).forEach(i->System.out.print(i+" "));
+        Arrays.stream(a).forEach(i->System.out.print(i+" "));*/
     }
 
     public int[] bucketSorting(int[] a) {
@@ -243,5 +245,55 @@ public class SortingUtility {
         Arrays.stream(a).forEach(System.out::println);
         System.out.println();
         return a[k-1];
+    }
+
+
+    public static int[] mergeSortUpgraded(int[] a, int s, int e) {
+        if(s>=e) return a;
+        int mid = s+(e-s)/2;
+        mergeSortUpgraded(a, s, mid);
+        mergeSortUpgraded(a, mid+1, e);
+        mergeUpgraded(a, s, e);
+        return a;
+    }
+
+    public static void mergeUpgraded(int[] a, int s, int e) {
+        int  l = s, m = s+(e-s)/2, r = m+1, k=0;
+        int[] temp = new int[e+1];
+        while(l <= m && r <= e) {
+            if(a[l] < a[r]) temp[k++] = a[l++];
+            else temp[k++] = a[r++];
+        }
+        while(l <= m) temp[k++] = a[l++];
+        while(r <= e) temp[k++] = a[r++];
+
+        l = s;
+        while(l <= e) a[l] = temp[l++-s];
+    }
+
+    public static int findInversions(int[] a, int s, int e) {
+        if(s>=e) return 0;
+        int mid = s+(e-s)/2;
+        return findInversions(a, s, mid)+
+                findInversions(a, mid+1, e)+
+                mergeInversion(a, s, e);
+    }
+
+    public static int mergeInversion(int[] a, int s, int e) {
+        int  l = s, m = s+(e-s)/2, r = m+1, k=0, count = 0;
+        int[] temp = new int[e+1];
+        while(l <= m && r <= e) {
+            if(a[l] < a[r]) temp[k++] = a[l++];
+            else {
+                count += (m-l+1);
+                temp[k++] = a[r++];
+            }
+        }
+        while(l <= m) temp[k++] = a[l++];
+        while(r <= e) temp[k++] = a[r++];
+        l = s;
+        while(l <= e) a[l] = temp[l++-s];
+
+        return count;
     }
 }

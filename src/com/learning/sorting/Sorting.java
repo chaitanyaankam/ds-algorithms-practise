@@ -3,7 +3,7 @@ package com.learning.sorting;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SortingUtility {
+public class Sorting {
 
     public static void main(String arg[]){
         //int[] a = new int[] {70, 40, 30, 20, 60, 10};
@@ -18,10 +18,12 @@ public class SortingUtility {
         //int[] af = new int[a1.length+a2.length];
         //sortingUtility.merge(af, a1, a2, a1.length, a2.length);
         //sortingUtility.mergeSort(a, a.length);
-        int[] a = new int[]{0, 5, 2, 3, 1};
+        int[] a = new int[]{10, 5, 2, 0, 7, 6, 4};
         //mergeSortUpgraded(a, 0, a.length-1);
         //Arrays.stream(a).forEach(x -> System.out.print(x+ " "));
-        System.out.println(findInversions(a, 0, a.length-1));
+        //System.out.println(findInversions(a, 0, a.length-1));
+        quickSort(a, 0, a.length-1);
+        Arrays.stream(a).forEach(x -> System.out.print(x+ " "));
 
         //List<String> activities = Arrays.asList(new String[]{"001", "035", "004"});
         /*Collections.sort(activities, (obj1, obj2)->{
@@ -117,9 +119,28 @@ public class SortingUtility {
       return a;
     }
 
-    public int[] quickSort(int[] a) {
+    public static void quickSort(int[] a, int s, int e) {
+        //base case if 1 and zero elements return
+        if(s>=e) return ;
+        //partition
+        int p = partition(a, s, e);
+        quickSort(a, s, p-1);
+        quickSort(a, p+1, e);
+    }
 
-        return a;
+    public static int partition(int[] a, int s, int e){
+        //int p = e;
+        // here last element e is considered as pivot
+        // or middle element s+(e-s)/2 can be considered
+        int i = s-1, p = e;
+        for(int j=s; j<e; j++) {
+            if(a[j] < a[p]) {
+                i++;
+                a[j] = a[i] + a[j] - (a[i] = a[j]);//swap i and j
+            }
+        }
+        a[p] = a[i+1]+a[p] - (a[i+1] = a[p]);
+        return i+1;
     }
 
     /**

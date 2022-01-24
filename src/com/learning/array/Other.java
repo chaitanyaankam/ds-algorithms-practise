@@ -119,4 +119,15 @@ public class Other {
         }
         return result;
     }
+
+    /**
+     * Given array [ 1, 6, 2, 6, 3, 6, 4, 5, 8, 7, 7, 9, 8, 6, 4 ]
+     * return [start, end] of the asked element
+     * O(log n)
+     * */
+    public static int[] findRange(int[] a, int k) {
+        int pivot = k, i = 0;
+
+        return null;
+    }
 }

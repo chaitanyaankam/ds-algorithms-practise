@@ -136,7 +136,7 @@ public class Sorting {
         for(int j=s; j<e; j++) {
             if(a[j] < a[p]) {
                 i++;
-                a[j] = a[i] + a[j] - (a[i] = a[j]);//swap i and j
+                a[j] = a[i] + a[j] - (a[i] = a[j]);//s wap i and j
             }
         }
         a[p] = a[i+1]+a[p] - (a[i+1] = a[p]);

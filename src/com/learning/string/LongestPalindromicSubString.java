@@ -1,5 +1,7 @@
 package com.learning.string;
 
+import java.util.*;
+
 /*
 * LPS
 * */
@@ -25,19 +27,37 @@ public class LongestPalindromicSubString {
         System.out.println(lpsString.substring(start, end+1));
     }
 
-        public int expandAroundCenter(String s, int l, int r){
-            if(s.length() == 0 || l>r) return 0;
-            while(l >= 0 && r < s.length() && s.charAt(l)==s.charAt(r)){
-                l--;
-                r++;
-            }
-            return r-l-1;
+    public int expandAroundCenter(String s, int l, int r){
+        if(s.length() == 0 || l>r) return 0;
+        while(l >= 0 && r < s.length() && s.charAt(l)==s.charAt(r)){
+            l--;
+            r++;
         }
+        return r-l-1;
+    }
 
     private String reverseString(String s){
         StringBuilder strBuilder = new StringBuilder();
         for(int i=s.length()-1; i>=0; i--)
             strBuilder.append(s.charAt(i));
         return strBuilder.toString();
+    }
+
+    public List<List<String>> Anagrams(String[] str) {
+        Map<String, List<String>> map = new HashMap<>();
+        String temp = null;
+        for(String s: str) {
+            temp = getLexOrder(s);
+            if(!map.containsKey(temp))
+                map.put(temp, new ArrayList<String>());
+            map.get(temp).add(s);
+        }
+        return (ArrayList) map.values();
+    }
+
+    public String getLexOrder(String s) {
+        char[] arr = s.toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
     }
 }

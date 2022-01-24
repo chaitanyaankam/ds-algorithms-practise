@@ -1,9 +1,12 @@
 package com.learning.string;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/*
+* https://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
+* https://www.geeksforgeeks.org/smallest-window-contains-characters-string/
+* */
 public class StringUtil {
     public static void main(String arg[]){
          /*String str = "I liked the movie, acting in the movie is great";
@@ -111,5 +114,16 @@ public class StringUtil {
         }
         result.append(cArray[cArray.length-1]).append(count+1);
         return result.toString();
+    }
+
+    //abba  - all characters occurs twice - len/2 = 2
+    //abcba - all but one character occurs twice -len/2+1 = 3
+    public static boolean canBePalindrome(String s) {
+        int len = s.length();
+        Set<Character> r = s.chars()
+                .distinct()
+                .mapToObj(i->(char) i)
+                .collect(Collectors.toSet());
+        return r.size() == len/2 || r.size() == len/2+1;
     }
 }

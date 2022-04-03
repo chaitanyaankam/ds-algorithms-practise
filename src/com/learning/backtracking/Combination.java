@@ -6,8 +6,8 @@ import java.util.List;
 public class Combination {
 
     public static void main(String[] arg) {
-        int[] a = { 1, 2, 3, 4, 5};
-        int k = 3;
+        int[] a = { 1, 2, 3, 4 };
+        int k = 2;
         List<List<Integer>> result = new ArrayList<>();
 
         getAllCombinations(a, k, k, 0, result, "");

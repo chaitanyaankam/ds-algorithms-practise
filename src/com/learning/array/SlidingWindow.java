@@ -25,7 +25,9 @@ public class SlidingWindow {
 
             if(queue.size() == k) {
                 result.add(max);
-                max = (max == queue.poll()) ? queue.stream().max((x, y) -> x.compareTo(y)).get() : max; //here we can do binary search
+                max = (max == queue.poll())
+                        ? queue.stream().max((x, y) -> x.compareTo(y)).get()
+                        : max; //here we can do binary search
             }
         }
         return result;

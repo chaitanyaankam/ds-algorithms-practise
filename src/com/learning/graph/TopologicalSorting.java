@@ -14,6 +14,8 @@ import java.util.*;
      * 'CSC100': []
  * },
  * should return ['CSC100', 'CSC200', 'CSCS300'].
+ *
+ * https://www.geeksforgeeks.org/topological-sorting/
  * */
 public class TopologicalSorting {
 

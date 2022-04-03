@@ -36,7 +36,6 @@ public class MeetingRoom {
 
     public static boolean canAttend(int[][] a) {
         quickSort(a, 0 , a.length - 1);
-        //for(int i = 0; i < a.length; i++) System.out.println(a[i][0]+" "+a[i][1]);
         for(int i = 1; i < a.length; i++)
             if(a[i - 1][1] > a[i][0]) return false;
         return true;

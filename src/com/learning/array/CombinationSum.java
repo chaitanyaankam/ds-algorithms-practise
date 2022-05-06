@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CombinationSum {
     public static void main(String[] arg) {
-        int[] a = {10,1,2,7,6,1,5};
-        int k = 8;
+        int[] a = {4, 8, 23, 1, 2, 3, 42, 7};
+        int k = 12;
         List<Integer> innerResult = new ArrayList<>();
         List<List<Integer>> result = new ArrayList<>();
         //getAllCombinations(a, k, 0, innerResult, result);

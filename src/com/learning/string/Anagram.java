@@ -12,7 +12,7 @@ public class Anagram {
     public static void main(String arg[]) {
         Set<Integer> result = new HashSet<Integer>();
         findAnagramStrings("abxaba", "ab", result);
-        result.stream().forEach(x -> System.out.println(x+" "));
+        result.stream().forEach(x -> System.out.print(x+" "));
     }
 
     public static void findAnagramStrings(String s, String w, Set<Integer> result) {

@@ -11,8 +11,15 @@ public class NQueen {
             for (int b : a) System.out.print(b+" ");
             System.out.println();
         }
+
+        int[][] board2 = new int[4][4];
+        int noOfWays = countNQueenWays(board2, 0);
+        System.out.println("no of ways "+ noOfWays);
     }
 
+    /**
+     * o(N^N) is the complexity
+     * */
     public static boolean nQueen(int[][] board, int row) {
         if(row == board.length)
             return true;
@@ -24,6 +31,20 @@ public class NQueen {
             }
         }
         return false;
+    }
+
+    public static int countNQueenWays(int[][] board, int row) {
+        if(row == board.length)
+            return 1;
+        int ways = 0;
+        for(int i = 0; i < board[0].length; i++) {
+            if(isSafe(board, row, i)) {
+                board[row][i] = 1;
+                ways += countNQueenWays(board, row + 1);
+                board[row][i] = 0;
+            }
+        }
+        return ways;
     }
 
     public static boolean isSafe(int[][] board, int row, int col) {

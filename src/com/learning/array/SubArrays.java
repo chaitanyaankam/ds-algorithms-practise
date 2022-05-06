@@ -17,12 +17,12 @@ public class SubArrays {
 
     public static void findSubSequence(int[] a, int count, int k, int i, int p) {
         if(k == count) {
-            System.out.println(k+" count: "+p);
+            //System.out.println(k+" count: "+p);
             return;
         } if(i > a.length-1 || p > 3)
             return;
-        findSubSequence(a, count+a[i], k, i+1, p+1);
-        findSubSequence(a, count, k, i+1, p);
+        findSubSequence(a, count + a[i], k, i + 1, p + 1);
+        findSubSequence(a, count, k, i + 1, p);
     }
 
     public static int[] findWindowToSwapEntireArray(int[] a){
@@ -34,7 +34,7 @@ public class SubArrays {
                 e = n-2-i;
         }
 
-        s = (s > e) ? s+e-(e = s) : s;
+        s = (s > e) ? s + e - (e = s) : s;
         //System.out.println("s "+s+" e "+e);
 
         int i = 0, start = 0, end = 0;

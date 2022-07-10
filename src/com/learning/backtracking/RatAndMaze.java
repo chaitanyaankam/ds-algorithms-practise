@@ -9,6 +9,8 @@ import java.util.List;
 // and a more complex version can be with a limited number of moves.
 public class RatAndMaze {
 
+    private static int count = 0;
+
     public static void main(String arg[]) {
         int[][] maze = {
                 {1, 0, 0, 0},
@@ -21,9 +23,51 @@ public class RatAndMaze {
         System.out.println(isPossibleToReachEnd);
 
         visited = new boolean [maze.length][maze[0].length];
+        getCountOfPaths(0, 0, maze, visited);
+        System.out.println("number of ways "+ count);
+
+        visited = new boolean [maze.length][maze[0].length];
         List<String> result = new ArrayList<>();
         getAllPaths(0, 0, maze, visited, "", result);
         result.stream().forEach(x -> System.out.println(x));
+
+        maze = new int[][]{
+                {0, 0, 0},
+                {0, 0, 0},
+                {0, 0, 0}
+        };
+        count = 0;
+        visited = new boolean [maze.length][maze[0].length];
+        int[][] dp = new int[maze.length][maze[0].length];
+        getAllPathsFromTopToBottom(0, 0, maze, visited);
+        System.out.println("number of ways of traversal "+ count);
+    }
+
+    public static void getAllPathsFromTopToBottom(int row, int col, int[][] maze, boolean[][] visited) {
+        if(row >= maze.length || col >= maze[0].length || visited[row][col])
+            return;
+        if(row == maze.length - 1 && col == maze[0].length - 1) {
+            count++;
+            return;
+        }
+
+        visited[row][col] = true;
+        getAllPathsFromTopToBottom(row, col + 1, maze, visited);
+        getAllPathsFromTopToBottom(row + 1, col, maze, visited);
+        visited[row][col] = false;
+    }
+
+    public static void getCountOfPaths(int row, int col, int[][] maze, boolean[][] visited) {
+        if(row < 0 || col < 0 || row >= maze.length || col >= maze[0].length || visited[row][col] || maze[row][col] == 0)
+            return;
+        if(row == maze.length - 1 && col == maze[0].length - 1) {
+            count++;
+            return;
+        }
+        visited[row][col] = true;
+        getCountOfPaths(row, col + 1, maze, visited);
+        getCountOfPaths(row + 1, col, maze, visited);
+        visited[row][col] = false;
     }
 
     public static void getAllPaths(int row, int col, int[][] maze, boolean[][] visited, String path, List<String> result) {

@@ -8,10 +8,11 @@ public class AstronautPairs {
     private static Map<Integer, Set<Integer>> group = new HashMap<>();
 
     public static void main(String[] arg) {
-        int n = 4;
+        int n = 5;
         Map<Integer, Integer> map = new HashMap<>();
         map.put(2, 3);
         map.put(1, 2);
+        map.put(0, 4);
         int res = combinations(map, n);
         System.out.println(res);
     }

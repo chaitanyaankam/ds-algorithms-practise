@@ -1,4 +1,4 @@
-package com.learning.Game;
+package com.learning.dp2d;
 
 import java.util.ArrayList;
 import java.util.Arrays;

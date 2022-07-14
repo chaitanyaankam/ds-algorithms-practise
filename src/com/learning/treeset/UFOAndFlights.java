@@ -72,6 +72,7 @@ public class UFOAndFlights {
      * constructs a tree set checks floor & ceiling of every sight.
      * Decides if every sight is in range or not.
      * If any sight not in range returns true
+     * O(n logn)
      * */
     public static int findUfo(int[] sights, int[][] flights) {
         TreeSet<int[]> treeSet = new TreeSet<>((x, y) -> x[0] < y[0] ? -1 : 1);

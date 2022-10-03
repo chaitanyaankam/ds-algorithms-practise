@@ -7,6 +7,14 @@ package com.learning.tree;
  * under it have the same value.
  * Given the root to a binary tree, count the number of unival subtrees.
  * For example, the following tree has 5 unival subtrees:
+ *
+ *    0
+ *   / \
+ *  1   0
+ *     / \
+ *    1   0
+ *   / \
+ *  1   1
  * **/
 public class UnivalTree {
 
@@ -30,7 +38,7 @@ public class UnivalTree {
         int count = solve(root.left) + solve(root.right);
         if(root.left == null && root.data == root.right.data) count++;
         else if(root.right == null && root.data == root.left.data) count++;
-        else count++;
+        else if(root.data == root.left.data && root.data == root.right.data) count++;
 
         return count;
     }

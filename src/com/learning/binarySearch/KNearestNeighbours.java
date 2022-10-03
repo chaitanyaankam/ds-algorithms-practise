@@ -3,14 +3,18 @@ package com.learning.binarySearch;
 public class KNearestNeighbours {
 
     public static void main(String[] arg) {
-        int[] a = {0, 3, 5, 7, 9};
-        int k = 3;
-        int x = 4;
+        //int[] a = {0, 3, 5, 7, 9};
+        int[] a = {-4, -1, 3, 6};
+        //int k = 3;
+        //int x = 4;
+        int x = 1;
+        int k = 1;
         findKNearestNeighbours(a, k ,x);//O(N)
         System.out.println();
         findKClosestLogN(a, k, x);
     }
 
+    //-4, -1, 1, 3, 6    1
     public static void findKClosestLogN(int a[], int k, int x) {
         int l = 0, r = a.length - k;
         while(l < r) {

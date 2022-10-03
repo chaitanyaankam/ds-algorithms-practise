@@ -30,7 +30,7 @@ public class WordBreak2 {
         if(len == 0 || lookup[len] != 0) return true;
         for(int i = 1; i <= s.length(); i++) {
             String prefix = s.substring(0, i);
-            if(d.contains(prefix) && canSolve(s.substring(i, s.length()), d, lookup)) {
+            if(d.contains(prefix) && canSolve(s.substring(i, len), d, lookup)) {
                 lookup[i] = 1;
                 return true;
             }

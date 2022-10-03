@@ -1,15 +1,13 @@
 package com.learning.string;
 
+/**
+ * A pangram is a sentence containing every letter in the English Alphabet.
+ * */
 public class WordBreak {
 
     public static void main(String[] arg) {
         String s = "The quick brown fox jumps over the lazy dog";
-        //System.out.println(isPangram(s));
-        int sal = 2932500;
-        System.out.println("45% "+(sal + sal*0.45));
-        System.out.println("42% "+(sal + sal*0.42));
-        System.out.println("40% "+(sal + sal*0.40));
-        System.out.println("40% "+(sal + sal*0.38));
+        System.out.println(isPangram(s));
     }
 
     private static boolean isPangram(String s) {

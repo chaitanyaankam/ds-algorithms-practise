@@ -141,7 +141,7 @@ class G {
                     parents.put(adj, curr);
                     adjV.visited = true;
                 } else if (adjV.d > currDistance) {
-                    mh.remove( );
+                    mh.remove(adjV);
                     adjV.d = currDistance;
                     mh.offer(adjV);
                     parents.put(adj, curr);

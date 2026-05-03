@@ -69,12 +69,12 @@ class G {
     }
 
     public void dfs(V s) {
+        s.visited = true;
         System.out.println(s.data);
         for(int i: s.nbrs) {
             V curr = vmap.get(i);
             if(!curr.visited) {
-                dfs(i);
-                curr.visited = true;
+                dfs(curr);
             }
         }
     }
@@ -88,6 +88,15 @@ class G {
         return false;
     }
 
+    /**
+     * The Shortest Path in an Undirected Graph uses BFS to find the shortest path.
+     * The first time it visits a vertex, it is always the shortest path to that vertex.
+     * because the vertex are at equal distances (unweighted graph).
+     * 
+     * Time Complexity is O(Vertices + Edges)
+     * Space Complexity is O(Vertices)
+     * @param s
+     */
     public void shortestPathUndirected(int s) {
         V start = vmap.get(s);
         start.d = 0;
@@ -121,28 +130,42 @@ class G {
     }
 
     // shortest path in D A G
+    /**
+     * The Shortest Path in a Directed Graph uses Dijkstra's Algorithm.
+     * It is a greedy algorithm that finds the shortest path from a starting vertex to all other vertices in the graph.
+     * It uses a priority queue to store the vertices and their distances from the starting vertex.
+     * 
+     * Time complexity is O(Edges log(V))
+     * Space complexity is O(Vertices)
+     * @param s starting vertex
+     */
     public void dijikstras(int s){
         V start = vmap.get(s);
         Map<Integer, V> parents = new HashMap<>();
-        PriorityQueue<V> mh = new PriorityQueue<V>(
-                (v1, v2) -> v1.d > v2.d ? -1 : ((v1.d < v2.d) ? 1 : 0 )
-        );
+        //PriorityQueue<V> mh = new PriorityQueue<V>(
+        //        (v1, v2) -> v1.d > v2.d ? -1 : ((v1.d < v2.d) ? 1 : 0 )
+        //);
+        PriorityQueue<V> mh = new PriorityQueue<V>((v1, v2) -> v1.d - v2.d);
         V curr = null;
         mh.add(start);
         while(!mh.isEmpty()) {
             curr = mh.poll();
+            if(curr.visited) 
+                continue;
+
             int currDistance = curr.d;
             for (int adj: curr.nbrs){
                 V adjV = vmap.get(adj);
-                currDistance += weights.get(curr.data+ SEPARATOR +adj);
+                int newDistance = currDistance + weights.get(curr.data+ SEPARATOR + adj);
+
                 if(!adjV.visited){
-                    adjV.d = currDistance;
+                    adjV.d = newDistance;
                     mh.add(adjV);
                     parents.put(adj, curr);
                     adjV.visited = true;
-                } else if (adjV.d > currDistance) {
-                    mh.remove(adjV);
-                    adjV.d = currDistance;
+                } else if (adjV.d > newDistance) {
+                    //mh.remove(adjV);
+                    adjV.d = newDistance;
                     mh.offer(adjV);
                     parents.put(adj, curr);
                 }

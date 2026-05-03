@@ -51,8 +51,8 @@ class G {
         V start = vmap.get(s);
         start.d = 0;
         Queue<V> queue = new ArrayDeque<>();
-        Map<Integer, V> parents = new HashMap<>();
         queue.offer(start);
+        start.visited = true;
 
         V curr = null;
         while (!queue.isEmpty()) {
@@ -61,8 +61,8 @@ class G {
             for(int adj: curr.nbrs) {
                 V adjV = vmap.get(adj);
                 if(!adjV.visited) {
-                    queue.offer(adjV);
                     adjV.visited = true;
+                    queue.offer(adjV);
                 }
             }
         }

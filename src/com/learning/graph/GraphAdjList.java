@@ -60,7 +60,7 @@ class G {
             System.out.println(curr.data);
             for(int adj: curr.nbrs) {
                 V adjV = vmap.get(adj);
-                if(!adjV.visited) {
+                if (!adjV.visited) {
                     adjV.visited = true;
                     queue.offer(adjV);
                 }
@@ -96,7 +96,7 @@ class G {
      * Time Complexity is O(Vertices + Edges)
      * Space Complexity is O(Vertices)
      * @param s
-     */
+    */
     public void shortestPathUndirected(int s) {
         V start = vmap.get(s);
         start.d = 0;
@@ -139,7 +139,7 @@ class G {
      * Space complexity is O(Vertices)
      * @param s starting vertex
      */
-    public void dijikstras(int s){
+    public void dijikstras_ShortestPath(int s){
         V start = vmap.get(s);
         Map<Integer, V> parents = new HashMap<>();
         //PriorityQueue<V> mh = new PriorityQueue<V>(
@@ -192,7 +192,7 @@ class G {
      * Space complexity is O(Vertices)
      * @param s starting vertex
      */
-    public void khansAlgorithm() {
+    public void khansAlgorithm_TopologicalSort() {
         Map<Integer, Integer> inDegree = new HashMap<>();
         for(int key: vmap.keySet()) {
             inDegree.put(key, 0);
@@ -221,6 +221,108 @@ class G {
                 }
             }
         }
+    }
+
+    /**
+     * Bellman-Ford algorithm is a shortest path algorithm that is used to find the shortest path from a starting vertex to all other vertices in the graph.
+     * It is a dynamic programming algorithm that uses a queue to store the vertices and their distances from the starting vertex.
+     * 
+     * Time complexity is O(Vertices * Edges)
+     * Space complexity is O(Vertices)
+     * @param s starting vertex
+     */
+    public void bellmanFord_ShortestPath(int s) {
+        V start = vmap.get(s);
+        start.d = 0;
+        start.visited = true;
+        Queue<V> queue = new ArrayDeque<>();
+        queue.offer(start);
+        Map<Integer, V> parents = new HashMap<>();
+
+        while(!queue.isEmpty()) {
+            V curr = queue.poll();
+            for(int nbr: curr.nbrs) {
+                V adj = vmap.get(nbr);
+                if(!adj.visited) {
+                    adj.d = curr.d + weights.get(curr.data+ SEPARATOR + nbr);
+                    adj.visited = true;
+                    queue.offer(adj);
+                } else if(adj.d > curr.d + weights.get(curr.data+ SEPARATOR + nbr)) {
+                    adj.d = curr.d + weights.get(curr.data+ SEPARATOR + nbr);
+                    parents.put(nbr, curr);
+                }
+            }
+        }
+
+        V end = start;
+        while(end != null){
+            System.out.print(end.data+"("+end.d+")<-");
+            end = parents.get(end.data);
+        }
+
+        System.out.println("start\nShortest Path "+start.d);
+        System.out.println("end "+end.data+" "+end.d);
+        System.out.println("start\nShortest Path "+start.d);
+    }
+
+    /**
+     * Kruskal's algorithm finds a Minimum Spanning Tree in an undirected weighted graph.
+     * Sort all edges by weight, then greedily add the lightest edge that does not form a cycle.
+     * DSU tracks which vertices are already connected in the growing forest.
+     *
+     * Time complexity is O(E log E)
+     * Space complexity is O(V)
+     */
+    public void kruskals_MinimumSpanningTree() {
+        List<DirectedEdge<Integer>> resultEdges = new ArrayList<>();
+        Map<Integer, Integer> labelToIndex = new HashMap<>();
+        
+        List<Integer> vertices = new ArrayList<>(vmap.keySet());
+        for (int i = 0; i < vertices.size(); i++) {
+            labelToIndex.put(vertices.get(i), i);
+        }
+
+        DSU dsu = new DSU(vmap.size());
+
+        List<DirectedEdge<Integer>> edges = new ArrayList<>();
+        Set<String> seen = new HashSet<>();
+        for (int s : vmap.keySet()) {
+            for (int e : vmap.get(s).nbrs) {
+                String key = s <= e ? s + SEPARATOR + e : e + SEPARATOR + s;
+                if (!seen.add(key)) {
+                    continue;
+                }
+
+                Integer weight = weights.get(s + SEPARATOR + e);
+                if (weight == null) {
+                    weight = weights.get(e + SEPARATOR + s);
+                }
+
+                DirectedEdge<Integer> edge = new DirectedEdge<>();
+                edge.start = new Vertex<>(s);
+                edge.end = new Vertex<>(e);
+                edge.weight = weight;
+                edges.add(edge);
+            }
+        }
+
+        edges.sort(Comparator.comparingInt(edge -> edge.weight));
+
+        for (DirectedEdge<Integer> edge : edges) {
+            int s = labelToIndex.get(edge.start.label);
+            int e = labelToIndex.get(edge.end.label);
+            if (!dsu.connected(s, e)) {
+                resultEdges.add(edge);
+                dsu.union(s, e);
+            }
+        }
+
+        int totalWeight = 0;
+        for (DirectedEdge<Integer> edge : resultEdges) {
+            System.out.println(edge.start.label + " - " + edge.end.label + " : " + edge.weight);
+            totalWeight += edge.weight;
+        }
+        System.out.println("MST total weight: " + totalWeight);
     }
 
     /**
@@ -264,6 +366,12 @@ class G {
                 rank[i] = 0;
             }
         }
+
+        // make set operation can be used instead of constructor
+        void makeSet(int x) {
+            parent[x] = x;
+            rank[x] = 0;
+        }
     
         // Find with path compression
         int find(int x) {
@@ -297,6 +405,8 @@ class G {
     }
 
 }
+
+
 class V {
     int data = 0;
     int d = 0;
@@ -322,7 +432,7 @@ public class GraphAdjList {
         graph.addEdges(3,4,4);
         graph.addEdges(4,5,4);
 
-        //graph.dijikstras(1);
+        //graph.dijikstras_ShortestPath(1);
 
         graph.undirected = true;
         //graph.bfs(1);
